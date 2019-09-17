@@ -1,0 +1,46 @@
+{
+  "name": "wechat",
+  "version": "0.0.1",
+  "description": "微信的pwa-vue模仿",
+  "author": "theagain <562258693@qq.com>",
+  "private": true,
+  "lavas": {
+    "core": "lavas-core-vue",
+    "version": "2"
+  },
+  "scripts": {
+    "dev": "lavas dev",
+    "build": "lavas build",
+    "start": "lavas start",
+    "lint": "fecs ./ --rule --type 'vue,js,css'"
+  },
+  "dependencies": {
+    "array-includes": "^3.0.3",
+    "array.prototype.find": "^2.0.4",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "cnchar": "^1.0.5",
+    "es6-promise": "^4.1.1",
+    "isomorphic-fetch": "^2.2.1",
+    "lavas-core-vue": "^1.1.11",
+    "normalize.css": "^7.0.0",
+    "vue-awesome-swiper": "^3.1.3",
+    "webrtc-adapter": "^7.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.2.5",
+    "babel-preset-vue-app": "^1.3.1",
+    "express": "^4.16.2",
+    "http-proxy-middleware": "^0.17.4",
+    "stoppable": "^1.0.4"
+  },
+  "engines": {
+    "node": ">= 6.9.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

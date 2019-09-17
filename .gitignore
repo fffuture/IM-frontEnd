@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.lavas/
+.nyc_output
+
+
+#忽略git的提交
+.git
+.idea
+
