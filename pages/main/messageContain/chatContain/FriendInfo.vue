@@ -12,11 +12,11 @@
       </svg>
     </header>
 
-    <div class="user-info">
-      <img src="http://47.103.151.107:8081/images/otherImg.jpg" alt />
+    <div class="user-info" v-if="!!personInfo">
+      <img :src="personInfo.imgURL" alt />
       <div>
         <span>
-          admin
+          {{personInfo.weChatId}}
           <i class="sex female"></i>
         </span>
         <!-- <span>微信号:HY1010030877</span>  -->
@@ -26,13 +26,13 @@
     </div>
 
     <a href target="_blank"></a>
-    <div class="other-info">
+    <div class="other-info" v-if="!!personInfo">
       <div>
         <span style="width: 100%">设置备注和标签</span>
       </div>
     </div>
 
-    <div class="other-info">
+    <div class="other-info" v-if="!!personInfo">
       <div>
         <span>地区</span>
         <span>福建 莆田</span>
@@ -44,28 +44,24 @@
         <span>更多</span>
       </div>
     </div>
-    <!-- <router-link :to="{path:'/main/message-contain/chat-contain/friend-info',query:{friendWeChatId:item.sender}}"> -->
-    <router-link
-      :to="{path:'/main/message-contain/chat-contain/apply-check',query:{friendWeChatId:$route.query.friendWeChatId}}"
-      tag="button"
-      v-if=" $route.query.page === 'search' "
-    >添加到通讯录</router-link>
+    <div v-if="!!personInfo">
+      <router-link
+        :to="{path:'/main/message-contain/chat-contain/apply-check',query:{friendWeChatId:$route.query.friendWeChatId}}"
+        tag="button"
+        v-if=" $route.query.page === 'search' "
+      >添加到通讯录</router-link>
 
-    <div v-else>
-      <!-- <router-link to="chat-details" tag="button">发消息</router-link>  :to="{path:'/main/message-contain/chat-details',query:{friendWeChatId:item.friendWeChatId}}" -->
-      <router-link
-        :to="{path:'/main/message-contain/chat-details',query:{friendWeChatId:$route.query.friendWeChatId}}"
-        tag="button"
-      >发消息</router-link>
-      <!-- <router-link :to="{path:'/main/webrtc',query:{friendWeChatId:$route.query.friendWeChatId}}" tag="button">视频通话</router-link> -->
-      <router-link
-        :to="{path:'/main/webrtc',query:{friendWeChatId:$route.query.friendWeChatId,friendImg:'http://47.103.151.107:8081/images/otherImg.jpg',type:'invite'}}"
-        tag="button"
-      >视频通话</router-link>
-      <!-- <button class="btn-video">视频通话</button> -->
+      <div v-else>
+        <router-link
+          :to="{path:'/main/message-contain/chat-details',query:{friendWeChatId:$route.query.friendWeChatId}}"
+          tag="button"
+        >发消息</router-link>
+        <router-link
+          :to="{path:'/main/webrtc',query:{friendWeChatId:$route.query.friendWeChatId,friendImg:'http://47.103.151.107:8081/images/otherImg.jpg',type:'invite'}}"
+          tag="button"
+        >视频通话</router-link>
+      </div>
     </div>
-    <!-- <router-link to="chat-details" tag="button">发消息</router-link>
-    <button class="btn-video">视频通话</button>-->
 
     <div class="hidden-setting" :class="{'display-setting':displaySetting}">
       <div class="cover-section" @touchstart.stop.prevent="displaySetting=!displaySetting"></div>
@@ -128,22 +124,28 @@ export default {
             svg: "#forbid-friendInfo",
             title: "加入黑名单",
             event: () => {
-              let message = {
+              let msg = {
                 content: "加入黑名单",
-                receiver: this.$route.query.friendWeChatId
+                receiver: this.$route.query.friendWeChatId,
+                type: "deFriend"
               };
-              this.$store.commit("dataHandler/DEFRIEND", message);
+              // this.$store.commit("dataHandler/DEFRIEND", message);
+              this.$store.dispatch("dataHandler/modifyFriendShip", msg);
+              this.$router.replace("/");
             }
           },
           {
             svg: "#forbid-friendInfo",
             title: "移出黑名单",
             event: () => {
-              let message = {
+              let msg = {
                 content: "移出黑名单",
-                receiver: this.$route.query.friendWeChatId
+                receiver: this.$route.query.friendWeChatId,
+                type: "friend"
               };
-              this.$store.commit("dataHandler/FRIEND", message);
+              // this.$store.commit("dataHandler/FRIEND", message);
+              this.$store.dispatch("dataHandler/modifyFriendShip", msg);
+              this.$router.replace("/");
             }
           },
           {
@@ -200,9 +202,17 @@ export default {
     // post('http://localhost:3000/api/queryUserInfo',{'weChatId':this.$route.query.friendWeChatId})
     post("/api/queryUserInfo", { weChatId: this.$route.query.friendWeChatId })
       .then(res => res.json())
+      .catch(error => {
+        // console.log(" friendInfo error: ", error);
+        this.$router.replace({
+          path: "/main/search",
+          query: { noResult: true }
+        });
+      })
       .then(res => {
         this.personInfo = res;
-        console.log("personInfo1", res);
+        // console.log("this.personInfo :", this.personInfo);
+        // console.log("personInfo1  111", res);
         // return res;
       });
   },

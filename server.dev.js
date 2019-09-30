@@ -45,7 +45,7 @@ var proxyTable = {
     //     changeOrigin: true
     // }
     '/api': {
-        target: 'http://192.168.42.204:8080',
+        target: 'http://localhost:8080',
         changeOrigin: true
     }
     // '/api': {

@@ -29,6 +29,18 @@ export const state = () => {
         console.log("wsCenter state sendFail", msg);
         commit('dataHandler/notFriend', msg, { root: true })
       },
+      'removeFriendSuccess': ({ dispatch, rootState }, msg) => {
+        console.log("wsCenter state sendFail", msg);
+        dispatch('dataHandler/friendList', rootState.dataHandler.weChatId, { root: true })
+      },
+      'deFriendSuccess': ({ dispatch, rootState }, msg) => {
+        console.log("wsCenter state sendFail", msg);
+        dispatch('dataHandler/friendList', rootState.dataHandler.weChatId, { root: true })
+      },
+      'friendSuccess': ({ dispatch, rootState }, msg) => {
+        console.log("wsCenter state sendFail", msg);
+        dispatch('dataHandler/friendList', rootState.dataHandler.weChatId, { root: true })
+      },
     }
   }
 };
@@ -49,7 +61,7 @@ export const actions = {
   initWs({ commit, dispatch, state, rootState }, weChatId) {
     // console.log("wsCenter state", state);
     if ('WebSocket' in window) {
-      state.ws = new WebSocket("ws://192.168.42.204:8080/socketServer/" + weChatId);
+      state.ws = new WebSocket("ws://localhost:8080/socketServer/" + weChatId);
     } else if ('MozWebSocket' in window) {
       state.ws = new MozWebSocket("ws://localhost:8080/socketServer/" + state.weChatId);
     } else {
@@ -62,13 +74,13 @@ export const actions = {
     // state.ws.send( ){ }
     state.ws.onmessage = function (evt) {
       let msg = JSON.parse(evt.data);
-      console.log("ws接收到消息", msg);
+      console.log("wsCenter actions onmessage", msg);
       //根据不消息类型调用函数,      
       state.msgMap[msg.type]({ commit, dispatch, state, rootState }, msg);
     }
 
     state.ws.onclose = function (evt) {
-      console.log("websocket已关闭");
+      alert("websocket已关闭");
     }
 
   },

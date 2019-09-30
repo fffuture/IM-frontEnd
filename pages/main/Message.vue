@@ -20,7 +20,8 @@
       </div>
     </router-link>
 
-    <router-link
+    <!-- <router-link
+
       class="messageItem"
       :to="{path:'/main/message-contain/group-chat',
 				query:{
@@ -40,7 +41,7 @@
         <span>早上8:58</span>
         <img class="icon-muse" src="@/static/img/icons/muse-message.png" alt />
       </div>
-    </router-link>
+    </router-link>-->
   </div>
 </template>
 <script>

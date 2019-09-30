@@ -1,5 +1,5 @@
 {
-    "start_url": "http://47.103.151.107/wechat",
+    "start_url": "http://localhost:3000/wechat",
     "name": "wechat",
     "short_name": "wechat",
     "icons": [

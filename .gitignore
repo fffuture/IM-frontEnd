@@ -11,4 +11,4 @@ yarn-error.log*
 #忽略git的提交
 .git
 .idea
-
+package-lock.json

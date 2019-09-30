@@ -15,9 +15,10 @@
             	</svg>
 			</span>
 			<div class="spreadList" v-show="display">
-				<div v-for="(item,index) in spreadLists" :key="index" @touchstart.stop.prevent="testSpread(item)">
-                    <img :src=" item.img" alt="" v-if="item.img != '' && !! item.img">
-					<svg v-else-if="item.svg != '' && !! item.svg">
+				<div v-for="(item,index) in spreadLists" :key="index" @touchstart.stop.prevent="toTarget(item)">
+          <!-- <img :src=" item.img" alt="" v-if="item.img != '' && !! item.img"> -->
+					<!-- <svg v-else-if="item.svg != '' && !! item.svg"> -->
+					<svg>
 						<use :xlink:href="item.svg"></use>
 					</svg>
 					{{ item.title }}
@@ -141,28 +142,33 @@ export default{
       return {
 		ws:'',
 		delayLoading:false,
-        spreadLists:[
-            {
-				svg:'#message-index',
-                title:"发起群聊"
-            },
-            {
-				svg:'#add-index',
-                title:"添加朋友"
-            },
-            {
-				svg:'#photograph-index',
-                title:"扫一扫"
-            },
-            {
-				svg:'#success-index',
-                title:"收付款"
-            },
-            {
-				svg:'#envelope-index',
-                title:"帮助与反馈"
-            }
-          ],
+		spreadLists:[
+			{
+					svg:'#message-index',
+					title:"发起群聊",
+					target:'/'
+			},
+			{
+					svg:'#add-index',
+					title:"添加朋友",
+					target:'/main/search'
+			},
+			{
+					svg:'#photograph-index',
+					title:"扫一扫",
+					target:'/'
+			},
+			{
+					svg:'#success-index',
+					title:"收付款",
+					target:'/'
+			},
+			{
+					svg:'#envelope-index',
+					title:"帮助与反馈",
+					target:'/'
+			}
+		],
 		swiperOption : {
           notNextTick: true,
           direction : 'horizontal',
@@ -347,49 +353,12 @@ export default{
   			this.display ? this.display = false : {};
   			//console.log("swiper");
   		},
-        testSpread:function(item){
-  		    // console.log( "click spreadList" + item.title);
-		},
-		/*websocketConnection:function(){
-			console.log('websocket连接');
-			if(true){
-				if ('WebSocket' in window){
-					console.log('chrome',WebSocket);
-					console.log('this.$store.state.test.weChatId ',this.$store.state.test.weChatId )
-					
-					// this.ws = new WebSocket("ws://localhost:8080/socketServer/"+window.localStorage.getItem('wechatId') );    
-					this.$store.state.test.ws = new WebSocket("ws://localhost:8080/socketServer/"+ this.$store.state.test.weChatId );    
-					// var WebSocket = require('ws');
-					// var ws = new WebSocket("ws://localhost:8080/socketServer/admin",'ws');
-				}    
-				else if ('MozWebSocket' in window){
-					var ws = new MozWebSocket("ws://localhost:8080/socketServer/"+window.localStorage.getItem('wechatId'));    
-				}
-				else{
-					alert("该浏览器不支持websocket");    
-				}    
-					
-				this.ws.onmessage = function(evt) {    
-					// alert(evt.data);    
-					console.log('接收到的信息',evt.data);
-				};    
-					
-				this.ws.onclose = function(evt) {    
-					alert("连接中断");    
-				};    
-					
-				this.ws.onopen = function(evt) {
-					console.log('连接成功');
-				};  
-			}else{
-				alert("请输入您的昵称");
+      // testSpread:function(item){
+			// 		console.log( "click spreadList" + item.title);
+			// },
+			toTarget:function(item){
+				this.$router.push(item.target);
 			}
-		},*/
-		/*websocketSend:function(){
-			console.log('发送ws消息');
-    		this.ws.send( JSON.stringify({"sender":window.localStorage.getItem('wechatId'),"receiver":"admin","content":"123"}) );    
-			
-	  }*/
   	}
 }   
 

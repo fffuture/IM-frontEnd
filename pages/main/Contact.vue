@@ -73,7 +73,7 @@ export default {
       // let letterBegin = /^[a-zA-Z]/;
       // console.log('测试字母开头',  letterBegin.test("1bc") );
 
-      console.log("拼写:", "abc".spell());
+      // console.log("拼写:", "abc".spell());
 
       let addSpellList = this.friendList.filter(friend => {
         // console.log("friend.remarks.spell()", friend.remarks);
